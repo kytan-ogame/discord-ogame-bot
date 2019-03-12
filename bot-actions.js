@@ -3,6 +3,7 @@ module.exports = {
 		var nKeys = keys.length;
 		for(let i = 0; i < nKeys; i++){
 			msg.channel.send('convertRE --> '+ keys[i]);
+			// test
 		}
 	}
 	, convertRC: ({msg, keys}) => {
