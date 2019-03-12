@@ -1,0 +1,14 @@
+{
+  "name": "discord-ogame-bot",
+  "description": "Bot discord pour afficher les RE/RC/RR",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.3.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "discord.js": "^11.4.2"
+  }
+}
