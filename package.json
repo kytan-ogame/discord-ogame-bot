@@ -1,15 +1,27 @@
 {
   "name": "discord-ogame-bot",
-  "description": "Bot discord pour afficher les RE/RC/RR",
   "version": "1.0.0",
-  "engines": {
-    "node": "8.11.3",
-    "npm": "6.1.x"
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "discord.js": "^11.4.2"
   },
+  "devDependencies": {},
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "devDependencies": {
-    "discord.js": "^11.4.2"
-  }
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kytan-ogame/discord-ogame-bot.git"
+  },
+  "author": "KYTAN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kytan-ogame/discord-ogame-bot/issues"
+  },
+  "homepage": "https://github.com/kytan-ogame/discord-ogame-bot#readme"
 }
