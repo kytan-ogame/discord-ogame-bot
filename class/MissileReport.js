@@ -1,8 +1,9 @@
 const Report = require('./Report');
-module.exports = class CombatReport extends Report {
+module.exports = class MissileReport extends Report {
 	getInfos() {
-		return this.fetch('combat/report?cr_id='+this.api)
+		return this.fetch('missile/report?mr_id='+this.api)
 	}
+
 	format() {
 		return new Promise((resolve, reject) => {
 			const fields = {
@@ -52,9 +53,9 @@ module.exports = class CombatReport extends Report {
 			const embed = {
 				"timestamp": "2019-03-04T13:34:56.950Z",
 				"footer": {
-					"text": "Tapé par KYTAN"
+					"text": "Missilé par KYTAN"
 				},
-				"title": "Rapport de combat de [3:478:15]",
+				"title": "Rapport de missilage de Colonie [3:478:15] (Joueur: Viceregent Deimos)",
 				//"fields": this.generateFields(fields, 'sr')
 			};
 			resolve(embed);
