@@ -1,35 +1,52 @@
 const Report = require('./Report');
+const dateFormat = require('dateformat');
 module.exports = class MissileReport extends Report {
-	init(){
+	init() {
+		this.rootingActionGF = 'missile/report';
 		this.fieldsIcons = {
-			'defence': ':rocket:',
+			'defense': ':rocket:',
 		}
 	}
+
 	getInfos() {
-		return this.fetch('missile/report?mr_id='+this.api)
+		return this.fetch('missile/report?mr_id=' + this.api)
 	}
+
 	format() {
 		return new Promise((resolve, reject) => {
-			const fields = {
-				"defence": [
-					{"401": "__1.000__ **(-523)**"},
-					{"402": "__4.699__ **(-33)**"},
-					{"403": "__3000__ **(-30)**"},
-					{"44": "__3000__ **(-30)**"},
-					{"405": "__3000__ **(-30)**"},
-				],
+			const data = this.responseJson.RESULT_DATA;
+			const date = new Date(data.generic.event_time);
 
+			const fields = {
+				"defense": []
+			};
+			const nDefense = data.details.defense.length;
+			const nDefenseDestroyed = data.details.defense_destroyed.length;
+
+			for(let i = 0; i < nDefense; i++){
+				const currentDefense = data.details.defense[i];
+				let destroyed = 0;
+				for(let j = 0; j < nDefenseDestroyed; j++){
+					const currentDefenseDestroyed = data.details.defense_destroyed[i];
+					if(currentDefenseDestroyed.defense_type === currentDefense.defense_type){
+						destroyed = currentDefenseDestroyed.count;
+					}
+				}
+				const def = {};
+				def[`${currentDefense.defense_type}`] = `${currentDefense.count} **(-${destroyed})**`;
+				fields.defense.push(def);
 			}
+
 			const embed = {
-				"timestamp": "2019-03-04T13:34:56.950Z",
-				"footer": {
-					"text": "Missilé par KYTAN"
-				},
 				"title": "Rapport de missilage de Colonie [3:478:15] (Joueur: Viceregent Deimos)",
-				"fields": this.generateFields(fields)
+				"description": `${this.t('recycledBy')} ${data.generic.attacker_name} (${this.t('503')}: ${data.generic.missiles_lost_attacker}) - ${dateFormat(date, this.t('localDateFormat'))}`,
+				"fields": this.generateFields(fields),
+				"footer": {
+					"text": this.api
+				},
 			};
 			resolve(embed);
 
 		})
 	}
-}
+};

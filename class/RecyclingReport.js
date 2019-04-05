@@ -1,64 +1,37 @@
 const Report = require('./Report');
+const dateFormat = require('dateformat');
 module.exports = class RecyclingReport extends Report {
-	getInfos() {
-		return this.fetch('recycle/report?rr_id='+this.api)
+	init() {
+		this.rootingActionGF = 'recycle/report';
 	}
+
 	format() {
 		return new Promise((resolve, reject) => {
-			const fields = {
-				'ressources': [
-					{'metal': '1.000.000'},
-					{'crystal': '2.000.000'},
-					{'deuterium': '3.000.000'},
-				],
-				'fleets': [
-					{'202': '55.663'},
-					{'203': '55.663'},
-					{'204': '55.663'},
-					{'205': '55.663'},
-					{'206': '55.663'},
-					{'207': '1.200'},
-					{'208': '1.200'},
-					{'213': '5.001'},
-					{'214': '3.500.001'},
-				],
-				'defence': [],
-				'building': [
-					{'1': 15},
-					{'2': 15},
-					{'3': 1},
-					{'4': 5},
-				],
-				'research': [
-					{'106': 15},
-					{'108': 15},
-					{'109': 15},
-					{'110': 15},
-					{'111': 15},
-					{'113': 15},
-					{'114': 15},
-					{'115': 15},
-					{'117': 15},
-					{'118': 15},
-					{'120': 15},
-					{'121': 15},
-					{'122': 15},
-					{'123': 15},
-					{'124': 15},
-					{'199': 15},
-				]
+			const data = this.responseJson.RESULT_DATA;
+			const date = new Date(data.generic.event_time);
+			const fields = {};
+			fields['resourcesInDebrisField'] = [
+				{'metal': data.generic.metal_in_debris_field},
+				{'crystal': data.generic.crystal_in_debris_field}
+			];
+			const totalRetrieved = (parseInt(data.generic.metal_retrieved) + parseInt(data.generic.crystal_retrieved)) || 0;
+			const totalInField = (parseInt(data.generic.metal_in_debris_field) + parseInt(data.generic.crystal_in_debris_field)) || 0;
+			let percentageRetrieved = ((totalRetrieved / totalInField * 100) || 100).toFixed(2);
+			fields[this.t('resourcesRetrieved') + ' (' + percentageRetrieved + '%)'] = [
+				{'metal': data.generic.metal_retrieved},
+				{'crystal': data.generic.crystal_retrieved}
+			];
 
-			}
 			const embed = {
-				"timestamp": "2019-03-04T13:34:56.950Z",
+				"title": `${this.t('recyclingReport')} [${data.generic.coordinates}]`,
+				"description": `${this.t('recycledBy')} ${data.generic.owner_name} (${this.t('209')}: ${data.generic.recycler_count}) - ${dateFormat(date, this.t('localDateFormat'))}`,
+				"fields": this.generateFields(fields),
 				"footer": {
-					"text": "Recyclé par KYTAN"
+					"text": this.api
 				},
-				"title": "Rapport de recyclage de [3:478:15]",
-				//"fields": this.generateFields(fields, 'sr')
 			};
 			resolve(embed);
 
 		})
 	}
-}
+};

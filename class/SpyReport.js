@@ -2,89 +2,53 @@ const Report = require('./Report');
 const dateFormat = require('dateformat');
 module.exports = class SpyReport extends Report {
 	init() {
+		this.rootingActionGF = 'spy/report';
 		this.fieldsIcons = {
-			'ressources': ':moneybag:',
-			'fleets': ':rocket:',
-			'defence': ':shield:',
-			'building': ':office:',
+			'resources': ':moneybag:',
+			'ships': ':rocket:',
+			'defense': ':shield:',
+			'buildings': ':office:',
 			'research': ':microscope:',
-			'fleetsRepair': ':wrench:'
+			'repairOrder': ':wrench:'
 		};
-		this.planetTypeIcons = [
-				'',
-				':earth_africa:', // id 1
-				'',
-				':full_moon:' // id 3
-		];
-	}
-
-	getInfos() {
-		return this.fetch('spy/report?sr_id=' + this.api)
 	}
 
 	format() {
+		const data = this.responseJson.RESULT_DATA;
 		return new Promise((resolve, reject) => {
-			let generatedFields = this.generateFields({
-				'ressources|3': [
-					{'metal': '1.000.000'},
-					{'crystal': '2.000.000'},
-					{'deuterium': '3.000.000'},
-				],
-				'fleets': [
-					{'202': '55.663'},
-					{'203': '55.663'},
-					{'204': '55.663'},
-					{'205': '55.663'},
-					{'206': '55.663'},
-					{'207': '1.200'},
-					{'208': '1.200'},
-					{'213': '5.001'},
-					{'214': '3.500.001'},
-				],
-				'fleetsRepair': [
-					{'204': '55.663'},
-					{'205': '55.663'},
-					{'206': '55.663'},
-				],
-				'defence': [],
-				'building': [
-					{'1': 15},
-					{'2': 15},
-					{'3': 1},
-					{'4': 5},
-				],
-				'research': [
-					{'106': 15},
-					{'108': 15},
-					{'109': 15},
-					{'110': 15},
-					{'111': 15},
-					{'113': 15},
-					{'114': 15},
-					{'115': 15},
-					{'117': 15},
-					{'118': 15},
-					{'120': 15},
-					{'121': 15},
-					{'122': 15},
-					{'123': 15},
-					{'124': 15},
-					{'199': 15},
+			let fields = {
+				'resources|3': [
+					{'metal': data.details.resources.metal},
+					{'crystal': data.details.resources.crystal},
+					{'deuterium': data.details.resources.deuterium},
 				]
-			});
+			};
+
+			if (!data.generic.failed_ships) {
+				fields.ships = data.details.ships;
+				fields.repairOrder = data.details.repairOrder;
+			}
+			if (!data.generic.failed_defense) {
+				fields.defense = data.details.defense;
+			}
+			if (!data.generic.failed_buildings) {
+				fields.buildings = data.details.buildings;
+			}
+			if (!data.generic.failed_research) {
+				fields.research = data.details.research;
+			}
+			const generatedFields = this.generateFields(fields);
 
 			/*
 				GESTION DE L'ACTIVITE
 			 */
-			const activity = 15;
-			const planetType = 3;
 			let activityMsg = this.t('activity') + ': ';
 			switch (true) {
-				case activity < 16 :
-					activityMsg = ' :exclamation:' + activityMsg + activity + this.t('minutes');
+				case data.generic.activity === 15 :
+					activityMsg = ' :exclamation:' + activityMsg + data.generic.activity + this.t('minutes');
 					break;
-				case activity < 60 :
-					activityMsg = ' :grey_exclamation:' + activityMsg + activity + this.t('minutes');
+				case data.generic.activity > 15 :
+					activityMsg = ' :grey_exclamation:' + activityMsg + data.generic.activity + this.t('minutes');
 					break;
 				default:
 					activityMsg += ' ' + this.t('noActivity')
@@ -92,19 +56,19 @@ module.exports = class SpyReport extends Report {
 			/*
 				GESTION DE LA DATE DU RAPPORT
 			 */
-			const timestamp = '2015-06-23T16:35:14+02:00';
-			const date = new Date(timestamp);
+			const date = new Date(data.generic.event_time);
 
 
 			const embed = {
-				"footer": {
-					"text":  `${this.t('spiedBy')} KYTAN - ${dateFormat(date, this.t('localDateFormat'))}`
-				},
-				"title": `${this.planetTypeIcons[planetType]} - Colonie [3:478:15] (Joueur: Viceregent Deimos)`,
-				"description": `${activityMsg} \n
+				"title": `${this.planetTypeIcons[data.generic.defender_planet_type]} - ${data.generic.defender_planet_name} [${data.generic.defender_planet_coordinates}] (${this.t('player')}: ${data.generic.defender_name})`,
+				"description": `${this.t('spiedBy')} ${data.generic.attacker_name} - ${dateFormat(date, this.t('localDateFormat'))}\n
+				${activityMsg} \n
 				[${this.t('openWith')} **TrashSim**](https://trashsim.universeview.be/${this.community}?SR_KEY=${this.api}) \n
 				[${this.t('openWith')} **SpeedSim**](http://topraider.eu/index.php?SR_KEY=${this.api})`,
-				"fields": generatedFields
+				"fields": generatedFields,
+				"footer": {
+					"text": this.api
+				},
 			};
 			resolve(embed);
 
