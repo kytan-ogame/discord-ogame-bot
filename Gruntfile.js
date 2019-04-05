@@ -11,7 +11,7 @@ module.exports = function (grunt)
         updateConfigs: ['pkg'],
         commit: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: ['package.json','changelog.md'],
+        commitFiles: ['package.json','CHANGELOG.md'],
         createTag: true,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
@@ -28,18 +28,6 @@ module.exports = function (grunt)
         changelogOpts: {
           // conventional-changelog options go here
           preset: 'angular'
-        },
-        context: {
-          // context goes here
-        },
-        gitRawCommitsOpts: {
-          // git-raw-commits options go here
-        },
-        parserOpts: {
-          // conventional-commits-parser options go here
-        },
-        writerOpts: {
-          // conventional-changelog-writer options go here
         }
       },
       release: {
@@ -48,7 +36,7 @@ module.exports = function (grunt)
     },
   });
   // release tasks
-  grunt.registerTask('_release-patch', ['bump-only:patch', 'conventionalChangelog']);
-  grunt.registerTask('_release-minor', ['bump-only:minor', 'conventionalChangelog']);
-  grunt.registerTask('_release-major', ['bump-only:major', 'conventionalChangelog']);
+  grunt.registerTask('_release-patch', ['bump-only:patch', 'conventionalChangelog', 'bump-commit']);
+  grunt.registerTask('_release-minor', ['bump-only:minor', 'conventionalChangelog', 'bump-commit']);
+  grunt.registerTask('_release-major', ['bump-only:major', 'conventionalChangelog', 'bump-commit']);
 };
