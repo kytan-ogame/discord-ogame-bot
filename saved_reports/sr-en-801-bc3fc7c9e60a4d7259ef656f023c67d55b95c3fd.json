@@ -1,0 +1,137 @@
+{
+  "RESULT_CODE": 1000,
+  "RESULT_DATA": {
+    "generic": {
+      "sr_id": "bc3fc7c9e60a4d7259ef656f023c67d55b95c3fd",
+      "event_time": "2019-04-09T11:51:54+01:00",
+      "event_timestamp": 1554807114,
+      "total_ship_count": 0,
+      "total_defense_count": 0,
+      "loot_percentage": 50,
+      "spy_fail_chance": 0,
+      "activity": -1,
+      "attacker_name": "Commander Matter",
+      "attacker_planet_name": "Moon",
+      "attacker_planet_coordinates": "7:462:12",
+      "attacker_planet_type": "3",
+      "attacker_alliance_name": null,
+      "attacker_alliance_tag": null,
+      "defender_name": "Director Midas",
+      "defender_planet_name": "Homeworld",
+      "defender_planet_coordinates": "7:425:6",
+      "defender_planet_type": "1",
+      "defender_alliance_name": null,
+      "defender_alliance_tag": null,
+      "failed_ships": false,
+      "failed_defense": false,
+      "failed_buildings": false,
+      "failed_research": false
+    },
+    "details": {
+      "resources": {
+        "metal": 1534504,
+        "crystal": 513530,
+        "deuterium": 311549
+      },
+      "buildings": [
+        {
+          "building_type": 1,
+          "level": 26
+        },
+        {
+          "building_type": 2,
+          "level": 21
+        },
+        {
+          "building_type": 3,
+          "level": 21
+        },
+        {
+          "building_type": 4,
+          "level": 25
+        },
+        {
+          "building_type": 14,
+          "level": 10
+        },
+        {
+          "building_type": 15,
+          "level": 3
+        },
+        {
+          "building_type": 21,
+          "level": 7
+        },
+        {
+          "building_type": 22,
+          "level": 10
+        },
+        {
+          "building_type": 23,
+          "level": 9
+        },
+        {
+          "building_type": 24,
+          "level": 8
+        },
+        {
+          "building_type": 31,
+          "level": 9
+        }
+      ],
+      "ships": [],
+      "defense": [],
+      "research": [
+        {
+          "research_type": 106,
+          "level": 7
+        },
+        {
+          "research_type": 108,
+          "level": 10
+        },
+        {
+          "research_type": 109,
+          "level": 5
+        },
+        {
+          "research_type": 110,
+          "level": 5
+        },
+        {
+          "research_type": 111,
+          "level": 5
+        },
+        {
+          "research_type": 113,
+          "level": 7
+        },
+        {
+          "research_type": 114,
+          "level": 8
+        },
+        {
+          "research_type": 115,
+          "level": 4
+        },
+        {
+          "research_type": 117,
+          "level": 6
+        },
+        {
+          "research_type": 120,
+          "level": 8
+        },
+        {
+          "research_type": 121,
+          "level": 5
+        },
+        {
+          "research_type": 124,
+          "level": 9
+        }
+      ],
+      "repairOrder": []
+    }
+  }
+}

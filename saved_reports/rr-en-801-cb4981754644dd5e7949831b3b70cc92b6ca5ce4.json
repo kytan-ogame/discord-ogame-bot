@@ -1,0 +1,20 @@
+{
+  "RESULT_CODE": 1000,
+  "RESULT_DATA": {
+    "generic": {
+      "rr_id": "cb4981754644dd5e7949831b3b70cc92b6ca5ce4",
+      "event_time": "2019-03-25T15:37:32+00:00",
+      "event_timestamp": 1553528252,
+      "coordinates": "7:462:12",
+      "recycler_count": "1",
+      "recycler_capacity": "20000",
+      "metal_in_debris_field": "0",
+      "crystal_in_debris_field": "11200",
+      "metal_retrieved": 0,
+      "crystal_retrieved": "11200",
+      "owner_name": "Commander Matter",
+      "owner_alliance_name": null,
+      "owner_alliance_tag": null
+    }
+  }
+}

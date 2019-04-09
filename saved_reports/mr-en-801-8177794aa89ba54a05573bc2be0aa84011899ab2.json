@@ -1,0 +1,34 @@
+{
+  "RESULT_CODE": 1000,
+  "RESULT_DATA": {
+    "generic": {
+      "mr_id": "8177794aa89ba54a05573bc2be0aa84011899ab2",
+      "event_time": "2019-04-04T11:50:42+01:00",
+      "event_timestamp": 1554375042,
+      "attacker_name": "Commander Matter",
+      "attacker_planet_name": "Homeworld",
+      "attacker_planet_coordinates": "7:462:12",
+      "attacker_planet_type": "1",
+      "defender_name": "Senator Oort",
+      "defender_planet_name": "Homeworld",
+      "defender_planet_coordinates": "7:444:10",
+      "defender_planet_type": "1",
+      "missiles_lost_attacker": 1,
+      "missiles_lost_defender": 0
+    },
+    "details": {
+      "defense": [
+        {
+          "defense_type": 401,
+          "count": 2
+        }
+      ],
+      "defense_destroyed": [
+        {
+          "defense_type": 401,
+          "count": 2
+        }
+      ]
+    }
+  }
+}
